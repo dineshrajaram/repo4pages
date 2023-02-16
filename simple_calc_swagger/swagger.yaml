@@ -3,7 +3,7 @@ info:
   title: DNB_SimpleCalculator_Assignment
   version: v1
 servers:
-  - url: https://cwnxonxzbd.execute-api.eu-north-1.amazonaws.com/{basePath}
+  - url: https://example.com/{basePath}
     variables:
       basePath:
         default: /prod
