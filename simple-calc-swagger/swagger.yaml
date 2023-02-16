@@ -1,0 +1,80 @@
+openapi: 3.0.1
+info:
+  title: DNB_SimpleCalculator_Assignment
+  version: v1
+servers:
+  - url: https://cwnxonxzbd.execute-api.eu-north-1.amazonaws.com/{basePath}
+    variables:
+      basePath:
+        default: /prod
+paths:
+  /:
+    post:
+      responses:
+        '200':
+          description: "Success. **result** will always be of type Double"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_200'
+        '400':
+          description: "Bad Request."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_400'
+      description: 'Calculator api implemented using Kotlin'
+      requestBody:
+        description: "fields **first_number** and **second_number** can be integer or float.Any other additional fields in the request body will be ignored. **operation** should be a valid enum."
+        content:
+          application/json:
+            schema:
+              $ref : '#/components/schemas/request'
+
+  /py:
+    post:
+      responses:
+        '200':
+          description: "Success. **result** will be of the same type as input operands"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_200'
+        '400':
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_400'
+      description: 'Calculator api implemented using Python'
+      requestBody:
+        description: "fields **first_number** and **second_number** can be integer or float.Any other additional fields in the request body will be ignored. **operation** should be a valid enum."
+        content:
+          application/json:
+            schema:
+              $ref : '#/components/schemas/request'
+components:
+  schemas:
+    response_200:
+      type: object
+      properties:
+        result:
+          type: number
+          nullable: false
+    response_400:
+      type: object
+      properties:
+        result:
+          type: string
+          nullable: false
+    request:
+      type: object
+      required: [first_number,second_number,operation]
+      properties:
+        first_number:
+          type: number
+        second_number:
+          type: number
+        operation:
+          type: string
+          enum: ["ADD","SUBTRACT","MULTIPLY","DIVIDE"]
